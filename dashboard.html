@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agro Vision | Smart Farming Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand dashboard-brand"><img src="assets/agro-vision-logo.png" alt="Agro Vision logo"><div><b>AGRO VISION</b><small>Smart Farming Platform</small></div>
+</div>
+      <nav>
+        <a class="active" href="#dashboard">▦ Dashboard</a>
+        <a href="#crop">🌾 Crop Selection</a>
+        <a href="#irrigation">💧 Irrigation</a>
+        <a href="#history">📈 History</a>
+      </nav>
+      <div class="side-note">
+        <span>●</span> Live Weather
+        <p>Using live weather context and soil moisture.</p>
+        <div class="live-mini"><i id="connectionDot"></i><b id="connectionText">WEATHER</b><small id="lastSync">Updating…</small></div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">SMART FARMING / LIVE ANALYSIS</div>
+          <h1>Agro Vision Dashboard</h1>
+          <p>Analyze crop and environmental conditions to recommend when and how much to irrigate.</p>
+        </div>
+        <button class="new-btn" id="newAnalysis">↻ New Analysis</button>
+      </header>
+
+      <section class="stats" id="dashboard">
+        <div class="stat-card crop-stat-card">
+          <div class="crop-stat-image"><img id="cropStatImage" src="assets/crops/wheat.jpg" alt="Wheat crop"></div>
+          <div><span>Detected Crop</span><strong id="cropStat">Wheat</strong></div>
+        </div>
+        <div class="stat-card">
+          <div class="icon blue">💧</div>
+          <div><span>Soil Moisture</span><strong id="moistureStat">Dry · 32%</strong></div>
+        </div>
+        <div class="stat-card live-top-stat">
+          <div class="icon orange">🌡️</div>
+          <div><span>Temperature</span><strong id="topLiveTemp">--°C</strong></div>
+        </div>
+        <div class="stat-card live-top-stat">
+          <div class="icon purple">💨</div>
+          <div><span>Humidity</span><strong id="topLiveHumidity">--%</strong></div>
+        </div>
+      </section>
+
+      <section class="crop-input-row">
+        <article class="card" id="crop">
+          <div class="card-head">
+            <div><span class="section-kicker">INPUT</span><h2>🌾 Crop Selection</h2></div>
+            <span class="pill">Manual Selection</span>
+          </div>
+
+          <div class="crop-select-wrap">
+            <label>Select Crop</label>
+            <div class="crop-picker" id="cropPicker">
+              <button type="button" class="crop-picker-trigger" id="cropPickerTrigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="crop-picker-current">
+                  <img id="cropPickerImage" src="assets/crops/wheat.jpg" alt="Wheat">
+                  <span id="cropPickerName">Wheat</span>
+                </span>
+                <span class="crop-picker-arrow">⌄</span>
+              </button>
+              <div class="crop-picker-panel" id="cropPickerPanel" role="listbox" aria-label="All crops"></div>
+            </div>
+          </div>
+
+
+          <div class="crop-info">
+            <div class="crop-image-panel">
+              <img id="cropDisplayImage" src="" alt="Wheat crop image">
+            </div>
+            <div class="crop-basic-info">
+              <span class="section-kicker">CROP IMAGE + BASIC INFO</span>
+              <h3 id="selectedCropName">Wheat</h3>
+              <div class="info-row"><span>Category</span><b id="cropCategory">Food Crop</b></div>
+              <div class="info-row"><span>Season</span><b id="cropSeason">Rabi</b></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card environment-soil-full" id="environment">
+          <div class="card-head">
+            <div><span class="section-kicker">ENVIRONMENT</span><h2>💧 Soil Moisture</h2></div>
+          </div>
+          <label>Soil Moisture</label>
+          <div class="choice-row" id="moistureChoices">
+            <button data-moisture="dry" class="choice selected">🌵 Dry<span>&lt; 35%</span></button>
+            <button data-moisture="medium" class="choice">🌱 Medium<span>35–65%</span></button>
+            <button data-moisture="wet" class="choice">💧 Wet<span>&gt; 65%</span></button>
+          </div>
+          <div class="sensor-row"><button class="analysis-btn" id="analysisBtn">Save analysis</button><b id="analysisStatus">Ready</b></div>
+        </article>
+      </section>
+
+      <section class="card realtime-weather" id="liveWeather">
+        <div class="card-head"><div><span class="section-kicker">REAL-TIME CONTEXT</span><h2>🌦️ Live Weather Context</h2></div><span class="pill" id="weatherStatus">LOCAL / DEMO</span></div>
+        <div class="weather-live-grid">
+          <div><span>Outside temperature</span><strong id="liveTemp">--°C</strong></div>
+          <div><span>Humidity</span><strong id="liveHumidity">--%</strong></div>
+          <div><span>Wind</span><strong id="liveWind">-- km/h</strong></div>
+          <div><span>Weather</span><strong id="liveWeatherText">Waiting for live data</strong></div>
+        </div>
+        <div class="weather-footer"><span id="weatherLocation">Location not shared</span><span id="weatherUpdated">Updating…</span></div>
+      </section>
+
+      <section class="card result" id="irrigation">
+        <div class="result-top">
+          <div><span class="section-kicker">MAIN OUTPUT</span><h2>🧠 Irrigation Recommendation</h2></div>
+          <span class="status high" id="statusBadge">HIGH IRRIGATION</span>
+        </div>
+        <div class="result-main">
+          <div class="water-ring"><span id="waterValue">10</span><small>mm/day</small></div>
+          <div class="recommendation">
+            <h3 id="resultTitle">High irrigation needed</h3>
+            <p id="resultText">Live weather and soil moisture are used to calculate the irrigation requirement.</p>
+            <div class="metric"><span>Water requirement</span><b id="litres">≈ 10 L/m² per day</b></div>
+          </div>
+        </div>
+        <button class="explain" id="explainBtn">ℹ️ How was this calculated?</button>
+        <div class="formula" id="formula"><b>Calculation basis:</b> Calculation uses the selected crop water requirement, current live weather (temperature, humidity, wind and rain conditions), and soil moisture. Dry soil increases demand, medium soil is neutral, and wet soil reduces demand. No historical weather baseline or live sensor stream is used.</div>
+      </section>
+
+      <section class="grid two">
+        <article class="card">
+          <div class="card-head"><div><span class="section-kicker">GUIDANCE</span><h2>💡 Smart Suggestions</h2></div></div>
+          <ul class="suggestions" id="suggestions"></ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><div><span class="section-kicker">NEXT STEP</span><h2>⏱️ Irrigation Schedule</h2></div></div>
+          <div class="schedule">
+            <div><span>Recommended time</span><strong>Morning / Evening</strong></div>
+            <div><span>Frequency</span><strong id="frequency">Daily</strong></div>
+            <div><span>Estimated duration</span><strong id="duration">25 minutes</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card" id="history">
+        <div class="card-head"><div><span class="section-kicker">RECORDS</span><h2>📈 Recent Analysis</h2></div><button class="clear" id="clearHistory">Clear</button></div>
+        <div class="table-wrap">
+          <table><thead><tr><th>Date</th><th>Crop</th><th>Moisture</th><th>Recommendation</th><th>Water</th></tr></thead>
+          <tbody id="historyBody"></tbody></table>
+        </div>
+      </section>
+
+      <footer>Agro Vision · Smart Farming Recommendation System · Live Weather + Soil Moisture</footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
