@@ -504,7 +504,7 @@ footer {
     .sidebar {
         width: 75px;
     }
-    .brand div, .sidebar nav a: not(.active), .side-note {
+    .brand div, .sidebar nav a:not(.active), .side-note {
         display: none;
     }
     .sidebar nav a.active {
@@ -781,10 +781,10 @@ footer {
     display: block;
     flex: 0 0 42px;
 }
-.crop-picker-panel: : -webkit-scrollbar {
+.crop-picker-panel::-webkit-scrollbar {
     width: 7px;
 }
-.crop-picker-panel: : -webkit-scrollbar-thumb {
+.crop-picker-panel::-webkit-scrollbar-thumb {
     background: #b8cfc0;
     border-radius: 10px;
 }
@@ -879,89 +879,104 @@ footer {
   font-size: .85rem;
   font-weight: 800;
 }
-/* ================================
-   MOBILE / PHONE RESPONSIVE
-================================ */
+
+
+/* =========================================================
+   MOBILE PHONE LAYOUT
+   - Portrait phones: bottom navigation
+   - No horizontal overflow
+   - Full-width content
+   - Keeps desktop/tablet layout unchanged
+========================================================= */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 @media (max-width: 768px) {
-
-    html,
-    body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    /* Main application */
-    .shell {
+    .app {
         display: block;
         width: 100%;
         min-height: 100vh;
     }
 
-    /* Sidebar */
-    .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-
-        width: 80px;
-        min-width: 80px;
-
-        z-index: 1000;
+    main {
+        margin-left: 75px;
+        width: calc(100% - 75px);
+        max-width: none;
+        padding: 20px 14px 30px;
     }
 
-    /* Main content */
-    .main,
-    .content,
-    .main-content {
-        margin-left: 80px !important;
-        width: calc(100% - 80px) !important;
-        max-width: none !important;
-        padding: 20px 14px !important;
-        box-sizing: border-box;
+    .topbar {
+        gap: 12px;
     }
 
-    /* Dashboard heading */
-    h1 {
-        font-size: 34px;
-        line-height: 1.1;
+    .topbar h1 {
+        font-size: clamp(24px, 7vw, 30px);
+        line-height: 1.12;
     }
 
-    h2 {
-        font-size: 25px;
+    .topbar p {
+        font-size: 12px;
+        line-height: 1.45;
     }
 
-    p {
+    .new-btn {
+        white-space: nowrap;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        min-width: 0;
+        padding: 14px;
+    }
+
+    .stat-card strong {
         font-size: 15px;
     }
 
-    /* Cards */
-    .card,
-    .dashboard-card,
-    .stat-card,
-    .input-card {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+    .grid.two {
+        grid-template-columns: 1fr;
     }
 
-    /* Images */
-    img {
-        max-width: 100%;
-        height: auto;
+    .card {
+        min-width: 0;
+        padding: 18px;
     }
 
-    /* Buttons */
-    button,
-    .btn {
-        max-width: 100%;
-        box-sizing: border-box;
+    .result-main {
+        gap: 18px;
+    }
+
+    .crop-info {
+        grid-template-columns: 1fr;
+    }
+
+    .crop-image-panel {
+        height: 180px;
+    }
+
+    .weather-live-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .realtime-strip {
+        flex-wrap: wrap;
+    }
+
+    .realtime-strip time {
+        margin-left: auto;
     }
 }
-@media (max-width: 600px) {
 
+@media (max-width: 600px) {
+    /* Bottom navigation replaces the desktop left sidebar */
     .sidebar {
         position: fixed;
         left: 0;
@@ -971,57 +986,232 @@ footer {
 
         width: 100%;
         height: 68px;
+        min-width: 0;
 
+        padding: 6px 8px;
         display: flex;
         align-items: center;
-        justify-content: space-around;
-
-        padding: 5px 10px;
+        justify-content: center;
 
         z-index: 9999;
+        box-shadow: 0 -4px 18px rgba(18, 61, 42, .18);
+    }
+
+    .brand,
+    .side-note {
+        display: none !important;
     }
 
     .sidebar nav {
-        display: flex;
         width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: stretch;
         justify-content: space-around;
+        gap: 2px;
     }
 
-    .sidebar nav a {
+    .sidebar nav a,
+    .sidebar nav a.active,
+    .sidebar nav a:hover {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 5px 3px;
+        border-radius: 8px;
+
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        font-size: 11px;
-        padding: 5px;
         text-align: center;
+        font-size: 10px;
+        line-height: 1.1;
+        color: #b9d2c3;
+        background: transparent;
     }
 
-    .sidebar .logo,
-    .sidebar .brand {
-        display: none;
+    .sidebar nav a.active {
+        background: #216b49;
+        color: #fff;
     }
 
-    .main,
-    .content,
-    .main-content {
+    main {
         margin-left: 0 !important;
         width: 100% !important;
+        max-width: none !important;
 
-        padding: 20px 15px 90px !important;
+        padding: 18px 14px 88px !important;
     }
 
-    h1 {
-        font-size: 30px;
+    .topbar {
+        display: block;
+        margin-bottom: 18px;
     }
 
-    .hero {
-        padding: 20px !important;
+    .topbar h1 {
+        font-size: clamp(27px, 8vw, 34px);
+        margin: 5px 0 8px;
+    }
+
+    .topbar p {
+        max-width: 100%;
+        font-size: 13px;
+    }
+
+    .new-btn {
+        width: 100%;
+        margin-top: 14px;
+        padding: 12px 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat-card {
+        width: 100%;
+    }
+
+    .grid.two {
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
 
     .card {
-        border-radius: 18px;
-        padding: 18px !important;
+        width: 100%;
+        padding: 17px !important;
+        border-radius: 14px;
+    }
+
+    .card-head {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .upload {
+        padding: 14px;
+        gap: 11px;
+        flex-wrap: wrap;
+    }
+
+    .upload .outline {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .crop-info {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .crop-image-panel {
+        height: 170px;
+    }
+
+    .recognition {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .actions {
+        flex-wrap: wrap;
+    }
+
+    .actions button {
+        flex: 1 1 140px;
+    }
+
+    .choice-row {
+        grid-template-columns: 1fr;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-main {
+        display: block;
+    }
+
+    .water-ring {
+        margin: 10px auto 20px;
+    }
+
+    .recommendation h3 {
+        font-size: 20px;
+    }
+
+    .metric {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .weather-live-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .weather-live-grid > div {
+        padding: 10px;
+    }
+
+    .weather-footer {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .realtime-strip {
+        font-size: 10px;
+    }
+
+    .realtime-strip time {
+        margin-left: auto;
+    }
+
+    .crop-picker.open .crop-picker-panel {
+        grid-template-columns: 1fr;
+        max-height: 280px;
+    }
+
+    .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 520px;
+    }
+
+    footer {
+        padding-bottom: 5px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+    main {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .card {
+        padding: 14px !important;
+    }
+
+    .topbar h1 {
+        font-size: 26px;
+    }
+
+    .stat-card {
+        padding: 12px;
+    }
+
+    .icon {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
     }
 }
