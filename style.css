@@ -879,3 +879,84 @@ footer {
   font-size: .85rem;
   font-weight: 800;
 }
+/* ================================
+   MOBILE / PHONE RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Main application */
+    .shell {
+        display: block;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        width: 80px;
+        min-width: 80px;
+
+        z-index: 1000;
+    }
+
+    /* Main content */
+    .main,
+    .content,
+    .main-content {
+        margin-left: 80px !important;
+        width: calc(100% - 80px) !important;
+        max-width: none !important;
+        padding: 20px 14px !important;
+        box-sizing: border-box;
+    }
+
+    /* Dashboard heading */
+    h1 {
+        font-size: 34px;
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    /* Cards */
+    .card,
+    .dashboard-card,
+    .stat-card,
+    .input-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Buttons */
+    button,
+    .btn {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
